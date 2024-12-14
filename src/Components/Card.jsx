@@ -1,16 +1,16 @@
 import React from "react";
 import "./Card.css";
 
-const Card = ({ 
-  title, 
-  value, 
-  unit, 
-  subtitle, 
-  min, 
-  max, 
-  color, 
-  icon, 
-  description 
+const Card = ({
+  title,
+  value,
+  unit,
+  subtitle,
+  min,
+  max,
+  color,
+  icon,
+  description,
 }) => {
   return (
     <div className="card" style={{ borderColor: color }}>

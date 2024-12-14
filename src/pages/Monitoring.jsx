@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ref, onValue } from "firebase/database";
-import { database } from "../Firebase/Firebase"; 
-import Card from "../Components/Card";
+import { database } from "../Firebase/Firebase";
+import CircularBar from "../Components/CircularBar";
+import WeatherCard from "../Components/WeatherCard";
 import "./Monitoring.css";
 
 const MonitoringPage = () => {
@@ -9,48 +10,76 @@ const MonitoringPage = () => {
   const [humidity, setHumidity] = useState(null);
 
   useEffect(() => {
-    // Referensi ke node "data/Temperature" di Realtime Database
     const temperatureRef = ref(database, "data/Temperature");
     const humidityRef = ref(database, "data/Humidity");
 
-    // Mendapatkan data Temperature dari Firebase
     onValue(temperatureRef, (snapshot) => {
       const data = snapshot.val();
       setTemperature(data);
     });
 
-    // Mendapatkan data Humidity dari Firebase
     onValue(humidityRef, (snapshot) => {
       const data = snapshot.val();
       setHumidity(data);
     });
   }, []);
 
+  // Logika untuk menentukan warna
+  const getTemperatureColor = (value) => {
+    if (value < 20) return "#87CEFA";
+    if (value > 25) return "#db1514";
+    return "#ff8c00";
+  };
+
+  const getHumidityColor = (value) => {
+    if (value < 40) return "#D2B48C";
+    if (value > 60) return "#00008B";
+    return "#007bff";
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", padding: "20px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "20px",
+        padding: "20px",
+      }}
+    >
       <h1 style={{ color: "#fff", marginBottom: "20px" }}>Monitoring Page</h1>
-      <Card
-        title="Temperature"
-        value={temperature !== null ? temperature : "--"}
-        unit="°C"
-        subtitle="Current Temperature"
-        min="0"
-        max="50°C"
-        color="#ff8c00"
-        icon={<i className="fas fa-thermometer-half"></i>}
-        description="Ideal range: 20 - 25°C"
-      />
-      <Card
-        title="Humidity"
-        value={humidity !== null ? humidity : "--"}
-        unit="%"
-        subtitle="Current Humidity"
-        min="0"
-        max="100%"
-        color="#007bff"
-        icon={<i className="fas fa-tint"></i>}
-        description="Ideal range: 40 - 60%"
-      />
+      <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "20px",
+          }}
+        >
+          <WeatherCard />
+        </div>
+        <CircularBar
+          title="Temperature"
+          value={temperature !== null ? temperature : 0}
+          unit="°C"
+          min={0}
+          max={100}
+          color={getTemperatureColor(temperature)}
+          icon={<i className="fas fa-thermometer-half"></i>}
+          description="Ideal range: 20 - 25°C"
+        />
+        <CircularBar
+          title="Humidity"
+          value={humidity !== null ? humidity : 0}
+          unit="%"
+          min={0}
+          max={100}
+          color={getHumidityColor(humidity)}
+          icon={<i className="fas fa-tint"></i>}
+          description="Ideal range: 40 - 60%"
+        />
+      </div>
     </div>
   );
 };

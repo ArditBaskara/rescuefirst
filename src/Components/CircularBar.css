@@ -1,0 +1,25 @@
+.circular-bar-container {
+  text-align: center;
+  width: 150px;
+}
+
+.circular-bar-title {
+  color: #fff;
+}
+
+.circular-bar-icon {
+  margin-bottom: 10px;
+}
+
+.circular-bar-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.circular-bar-description {
+  color: #ccc;
+  font-size: 12px;
+  margin-top: 5px;
+}
