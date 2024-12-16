@@ -8,10 +8,13 @@ import "./Monitoring.css";
 const MonitoringPage = () => {
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
+  const [rainStatus, setRainStatus] = useState(false);
+  const [analogValue, setAnalogValue] = useState(0);
 
   useEffect(() => {
     const temperatureRef = ref(database, "data/Temperature");
     const humidityRef = ref(database, "data/Humidity");
+    const raindropRef = ref(database, "data/Raindrop");
 
     onValue(temperatureRef, (snapshot) => {
       const data = snapshot.val();
@@ -21,6 +24,12 @@ const MonitoringPage = () => {
     onValue(humidityRef, (snapshot) => {
       const data = snapshot.val();
       setHumidity(data);
+    });
+
+    onValue(raindropRef, (snapshot) => {
+      const data = snapshot.val();
+      setAnalogValue(data.analogValue);
+      setRainStatus(data.rainStatus);
     });
   }, []);
 
@@ -35,6 +44,10 @@ const MonitoringPage = () => {
     if (value < 40) return "#D2B48C";
     if (value > 60) return "#00008B";
     return "#007bff";
+  };
+
+  const getRaindropColor = (value) => {
+    return value ? "#0000FF" : "#808080"; // Blue if raining, gray if not
   };
 
   return (
@@ -78,6 +91,16 @@ const MonitoringPage = () => {
           color={getHumidityColor(humidity)}
           icon={<i className="fas fa-tint"></i>}
           description="Ideal range: 40 - 60%"
+        />
+        <CircularBar
+          title="Raindrop"
+          value={rainStatus ? "ujan" : "ga ujan"}
+          unit=""
+          min={0}
+          max={1}
+          color={getRaindropColor(rainStatus)}
+          icon={<i className="fas fa-cloud-rain"></i>}
+          description={`Analog Value: ${analogValue}`}
         />
       </div>
     </div>

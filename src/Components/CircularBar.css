@@ -1,14 +1,38 @@
 .circular-bar-container {
   text-align: center;
   width: 150px;
+  background: linear-gradient(135deg, #4c4c4c, #2b2b2b);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.circular-bar-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .circular-bar-title {
   color: #fff;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .circular-bar-icon {
   margin-bottom: 10px;
+  font-size: 40px;
+  color: #f5a623;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
 
 .circular-bar-footer {
@@ -16,10 +40,23 @@
   justify-content: space-between;
   margin-top: 10px;
   color: #fff;
+  font-size: 14px;
+}
+
+.circular-bar-footer span {
+  transition: color 0.3s ease;
+}
+
+.circular-bar-footer span:hover {
+  color: #f5a623;
 }
 
 .circular-bar-description {
   color: #ccc;
   font-size: 12px;
   margin-top: 5px;
+}
+
+.circular-bar-description:hover {
+  color: #f5a623;
 }
