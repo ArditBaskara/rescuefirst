@@ -8,13 +8,13 @@ import "./Monitoring.css";
 const MonitoringPage = () => {
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
-  const [rainStatus, setRainStatus] = useState(false);
+  const [rainStatus, setRainStatus] = useState('No Rain'); // Default value should be 'No Rain'
   const [analogValue, setAnalogValue] = useState(0);
 
   useEffect(() => {
     const temperatureRef = ref(database, "data/Temperature");
     const humidityRef = ref(database, "data/Humidity");
-    const raindropRef = ref(database, "data/Raindrop");
+    const raindropRef = ref(database, "data/RainStatus"); // Use the correct Firebase node path
 
     onValue(temperatureRef, (snapshot) => {
       const data = snapshot.val();
@@ -28,8 +28,10 @@ const MonitoringPage = () => {
 
     onValue(raindropRef, (snapshot) => {
       const data = snapshot.val();
-      setAnalogValue(data.analogValue);
-      setRainStatus(data.rainStatus);
+      if (data) {
+        // Only update rain status if the data is valid
+        setRainStatus(data); // Store the raw rain status string
+      }
     });
   }, []);
 
@@ -46,8 +48,8 @@ const MonitoringPage = () => {
     return "#007bff";
   };
 
-  const getRaindropColor = (value) => {
-    return value ? "#0000FF" : "#808080"; // Blue if raining, gray if not
+  const getRaindropColor = (status) => {
+    return status === 'Rain' ? "#0000FF" : "#808080"; // Blue if raining, gray if not
   };
 
   return (
@@ -94,13 +96,13 @@ const MonitoringPage = () => {
         />
         <CircularBar
           title="Raindrop"
-          value={rainStatus ? "ujan" : "ga ujan"}
+          value={rainStatus === "Rain" ? 1 : 0} // Convert string status to number
           unit=""
           min={0}
           max={1}
           color={getRaindropColor(rainStatus)}
           icon={<i className="fas fa-cloud-rain"></i>}
-          description={`Analog Value: ${analogValue}`}
+          description={`Status: ${rainStatus === "Rain" ? "Hujan" : "Tidak Hujan"}`}
         />
       </div>
     </div>
