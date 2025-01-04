@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { ref, onValue } from "firebase/database";
 import { database } from "../Firebase/Firebase";
 import CircularBar from "../Components/CircularBar";
-import WeatherCard from "../Components/WeatherCard";
 import "./Monitoring.css";
 
 const MonitoringPage = () => {
   const [temperature, setTemperature] = useState(null);
   const [humidity, setHumidity] = useState(null);
-  const [rainStatus, setRainStatus] = useState('No Rain'); // Default value should be 'No Rain'
+  const [rainStatus, setRainStatus] = useState("No Rain"); // Default value should be 'No Rain'
   const [analogValue, setAnalogValue] = useState(0);
 
   useEffect(() => {
@@ -49,31 +48,37 @@ const MonitoringPage = () => {
   };
 
   const getRaindropColor = (status) => {
-    return status === 'Rain' ? "#0000FF" : "#808080"; // Blue if raining, gray if not
+    return status === "Rain" ? "#0000FF" : "#808080"; // Blue if raining, gray if not
   };
 
   return (
     <div
       style={{
+        height: "100vh", // Kontainer utama memenuhi tinggi layar
         display: "flex",
-        flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
-        gap: "20px",
-        padding: "20px",
+        flexDirection: "column",
+        backgroundColor: "#282c34", // Tambahkan warna background jika diperlukan
       }}
     >
-      <h1 style={{ color: "#fff", marginBottom: "20px" }}>Monitoring Page</h1>
-      <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "20px",
-          }}
-        >
-          <WeatherCard />
-        </div>
+      <h1
+        style={{
+          color: "#fff",
+          margin: "0 0 50px 0",
+          textAlign: "center",
+        }}
+      >
+        Monitoring Bencana Gd.Keselamatan
+      </h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "50px", // Jarak antar komponen
+        }}
+      >
         <CircularBar
           title="Temperature"
           value={temperature !== null ? temperature : 0}
@@ -102,7 +107,9 @@ const MonitoringPage = () => {
           max={1}
           color={getRaindropColor(rainStatus)}
           icon={<i className="fas fa-cloud-rain"></i>}
-          description={`Status: ${rainStatus === "Rain" ? "Hujan" : "Tidak Hujan"}`}
+          description={`Status: ${
+            rainStatus === "Rain" ? "Hujan" : "Tidak Hujan"
+          }`}
         />
       </div>
     </div>

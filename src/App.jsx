@@ -1,13 +1,21 @@
-import React from 'react';
-import './App.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import MonitoringPage from './pages/Monitoring'; // Import MonitoringPage
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import MonitoringPage from "./pages/Monitoring";
 
 function App() {
   return (
-    <div className="App">
-      <MonitoringPage />
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Route untuk Landing Page */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* Route untuk Monitoring Page */}
+          <Route path="/monitoring" element={<MonitoringPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
