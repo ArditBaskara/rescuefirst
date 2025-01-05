@@ -1,12 +1,13 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getDatabase, ref, onValue } from 'firebase/database';  
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getDatabase, ref, onValue, set } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBhfIPnCc5rYYVRA597ua0sa-YgEzNGCXo",
   authDomain: "turbine-8daf7.firebaseapp.com",
-  databaseURL: "https://turbine-8daf7-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  databaseURL:
+    "https://turbine-8daf7-default-rtdb.asia-southeast1.firebasedatabase.app/",
   projectId: "turbine-8daf7",
   storageBucket: "turbine-8daf7.appspot.com",
   messagingSenderId: "229385859320",
@@ -24,4 +25,4 @@ const signInWithGoogle = () => {
   return signInWithPopup(auth, provider);
 };
 
-export { auth, db, database, signInWithGoogle, ref, onValue };  
+export { auth, db, database, signInWithGoogle, ref, onValue, set };

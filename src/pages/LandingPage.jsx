@@ -8,6 +8,7 @@ import korban from "../assets/korban.png";
 import banjir from "../assets/banjir.png";
 import MonitoringPage from "./Monitoring";
 import ResponsePage from "./ResponsePage";
+import { database, ref, set } from "../Firebase/Firebase";
 import "./LandingPage.css";
 
 const LandingPage = () => {
@@ -19,12 +20,26 @@ const LandingPage = () => {
   };
 
   const handleEmergencyClick = () => {
-    Swal.fire({
-      title: "Bantuan telah kami kirim!",
-      text: "Sekarang tunggu dan baca panduan penanganan pertama.",
-      icon: "success",
-      confirmButtonText: "OK",
-    });
+    const emergencyRef = ref(database, "data/emergencyStatus");
+    set(emergencyRef, {
+      status: true,
+    })
+      .then(() => {
+        Swal.fire({
+          title: "Bantuan telah kami kirim!",
+          text: "Sekarang tunggu dan baca panduan penanganan pertama.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Terjadi kesalahan",
+          text: `Gagal mengirimkan data darurat: ${error.message}`,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   return (
