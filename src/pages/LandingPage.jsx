@@ -39,6 +39,10 @@ const LandingPage = () => {
         });
       });
   };
+  const eastereggs = () =>{
+    const emergencyRef = ref(database, "data/emergencyStatus");
+    set(emergencyRef, 0)
+  };
 
   return (
     <div
@@ -86,8 +90,9 @@ const LandingPage = () => {
                 <p>Banjir</p>
               </li>
               <li>
+                
                 <img src={korban} alt="Korban" />
-                <p>Korban</p>
+                <button className="button-style" style={{backgroundColor:"white", border:"none"}} onClick={eastereggs}>korban</button>
               </li>
             </ul>
           </div>

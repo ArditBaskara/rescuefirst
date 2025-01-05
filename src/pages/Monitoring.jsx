@@ -72,14 +72,7 @@ const MonitoringPage = () => {
         Monitoring Bencana Gd.Keselamatan
       </h1>
       <div
-        className="card"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "50px",
-        }}
-      >
+  className="card-wrapper">
         <CircularBar
           title="Temperature"
           value={temperature !== null ? temperature : 0}
@@ -113,6 +106,7 @@ const MonitoringPage = () => {
           }`}
         />
       </div>
+
     </div>
   );
 };

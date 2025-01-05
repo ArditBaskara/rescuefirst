@@ -19,20 +19,46 @@ h1 {
 
 .card-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 20px;
-  flex-wrap: wrap;
+  overflow-x: auto; /* Memungkinkan scroll horizontal */
+  white-space: nowrap; /* Mencegah elemen turun ke baris berikutnya */
+  padding: 10px;
+  scrollbar-width: thin; /* Mengatur lebar scrollbar untuk browser yang mendukung */
 }
 
-.title {
-  color: #fff;
-  margin-bottom: 20px;
+.card-wrapper::-webkit-scrollbar {
+  height: 8px; /* Tinggi scrollbar */
+}
+
+.card-wrapper::-webkit-scrollbar-thumb {
+  background: #666; /* Warna scrollbar */
+  border-radius: 4px; /* Membuat ujung scrollbar melengkung */
+}
+
+.card-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #444; /* Warna scrollbar saat hover */
+}
+
+.card {
+  flex: 0 0 auto; /* Mencegah card menyusut atau meluas */
+  width: 300px; /* Lebar setiap card */
+  background: #1c1c1c; /* Warna background kartu */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 @media (max-width: 768px) {
+  .card-wrapper {
+    overflow-x: auto; /* Aktifkan scroll horizontal */
+    padding: 10px; /* Beri padding untuk estetika */
+  }
+
   .card {
-    display: none;
-    width: 500px;
+    min-width: 250px; /* Lebar minimum setiap card */
+    max-width: 300px; /* Lebar maksimum setiap card */
   }
 }
+
