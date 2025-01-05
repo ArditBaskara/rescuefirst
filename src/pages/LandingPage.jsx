@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import Swal from "sweetalert2";
 import rescueFirstImg from "../assets/rescueFirst.png";
 import backgroundImg from "../assets/Background.png";
 import Button from "../Components/Button";
@@ -6,13 +7,39 @@ import kebakaran from "../assets/kebakaran.png";
 import korban from "../assets/korban.png";
 import banjir from "../assets/banjir.png";
 import MonitoringPage from "./Monitoring";
+import ResponsePage from "./ResponsePage";
+import { database, ref, set } from "../Firebase/Firebase";
 import "./LandingPage.css";
 
 const LandingPage = () => {
   const monitoringRef = useRef(null);
+  const responseRef = useRef(null);
 
-  const handleClick = () => {
-    monitoringRef.current.scrollIntoView({ behavior: "smooth" });
+  const handleGuideClick = () => {
+    responseRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleEmergencyClick = () => {
+    const emergencyRef = ref(database, "data/emergencyStatus");
+    set(emergencyRef, {
+      status: true,
+    })
+      .then(() => {
+        Swal.fire({
+          title: "Bantuan telah kami kirim!",
+          text: "Sekarang tunggu dan baca panduan penanganan pertama.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Terjadi kesalahan",
+          text: `Gagal mengirimkan data darurat: ${error.message}`,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      });
   };
 
   return (
@@ -33,7 +60,18 @@ const LandingPage = () => {
             dengan akurasi tinggi. Dengan RescueFirst, keselamatan Anda adalah
             prioritas utama kami.
           </p>
-          <Button text="Check it!" onClick={handleClick} />
+          <div className="button-container">
+            <Button
+              text="Guide"
+              onClick={handleGuideClick}
+              style={{ backgroundColor: "white", color: "black" }}
+            />
+            <Button
+              text="Emergency!!"
+              onClick={handleEmergencyClick}
+              style={{ backgroundColor: "red", color: "white" }}
+            />
+          </div>
         </div>
 
         <div className="landing-image">
@@ -60,6 +98,10 @@ const LandingPage = () => {
 
       <div ref={monitoringRef}>
         <MonitoringPage />
+      </div>
+
+      <div ref={responseRef} style={{ backgroundColor: "white" }}>
+        <ResponsePage />
       </div>
     </div>
   );
