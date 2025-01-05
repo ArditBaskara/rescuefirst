@@ -33,5 +33,6 @@ h1 {
 @media (max-width: 768px) {
   .card {
     display: none;
+    width: 500px;
   }
 }

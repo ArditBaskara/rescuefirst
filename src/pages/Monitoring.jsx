@@ -77,7 +77,7 @@ const MonitoringPage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: "50px", // Jarak antar komponen
+          gap: "50px",
         }}
       >
         <CircularBar
