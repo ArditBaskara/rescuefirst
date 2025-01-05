@@ -21,7 +21,7 @@ const LandingPage = () => {
 
   const handleEmergencyClick = () => {
     const emergencyRef = ref(database, "data/emergencyStatus");
-    set(emergencyRef, 1)
+    set(emergencyRef, 2)
       .then(() => {
         Swal.fire({
           title: "Bantuan telah kami kirim!",

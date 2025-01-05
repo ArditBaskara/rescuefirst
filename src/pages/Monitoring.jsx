@@ -72,6 +72,7 @@ const MonitoringPage = () => {
         Monitoring Bencana Gd.Keselamatan
       </h1>
       <div
+        className="card"
         style={{
           display: "flex",
           justifyContent: "center",
